@@ -23,9 +23,10 @@ Some more info:
 
 Simulate 404 (any method):
 URL: http://localhost:4000/errors/404
+
 Simulate 500 with custom message via body (e.g. POST):
 URL: http://localhost:4000/errors/500
 Body JSON: { "errorMessage": "My custom 500 error" }
+
 Simulate 403 with custom message via query param (GET):
 URL: http://localhost:4000/errors/403?message=Access+denied+for+testing
-If you prefer specific named endpoints per error (e.g. /not-found, /forbidden-403) or need additional status codes/response fields, tell me your preferred naming and I’ll adjust the routes accordingly.
