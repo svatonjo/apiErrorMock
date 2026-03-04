@@ -21,6 +21,10 @@ Usage
 
 Some more info:
 
+EPs:
+/errors/:statusCode
+/PD/applications/:statusCode
+
 Simulate 404 (any method):
 - URL: http://localhost:4000/errors/404
 
@@ -30,3 +34,6 @@ Simulate 500 with custom message via body (e.g. POST):
 
 Simulate 403 with custom message via query param (GET):
 - URL: http://localhost:4000/errors/403?message=Access+denied+for+testing
+
+Added extra PD EP
+Usage Example: Redirect to: http://localhost:4000/PD/applications/404?errorType=Osoba nebyla dohledána&errorTitle=TEST_Osoba_nenalezena&origType=OSOBA_NENALEZENA&origDesc=TEST_Osoba nenalezena 

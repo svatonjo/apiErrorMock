@@ -75,6 +75,58 @@ app.all('/errors/:statusCode', (req, res) => {
   });
 });
 
+// PD-style error payload endpoint
+// Allows simulating the PD error shape on a separate endpoint
+// Example:
+//   GET /PD/applications/404?PD_message_title=Title&PD_message_body=Body
+//   POST /PD/applications/500 { "PD_message_title": "T", "PD_message_body": "B" }
+app.all('/PD/applications/:statusCode', (req, res) => {
+  const { statusCode } = req.params;
+  const def = errorDefinitions[statusCode];
+
+  if (!def) {
+    return res.status(400).json({
+      errorCode: 400,
+      errorName: 'Bad Request',
+      errorMessage: `Unsupported simulated status code: ${statusCode}`
+    });
+  }
+
+  const errorType =
+    (req.body && req.body.errorType) ||
+    req.query.errorType ||
+    def.name;
+
+  const errorTitle =
+    (req.body && req.body.errorTitle) ||
+    req.query.errorTitle ||
+    def.message;
+
+  const origType =
+    (req.body && req.body.origType) ||
+    req.query.origType ||
+    def.name;
+
+  const origDesc =
+    (req.body && req.body.origDesc) ||
+    req.query.origDesc ||
+    def.message;
+
+  const traceId =
+    (req.body && req.body.traceId) ||
+    req.query.traceId ||
+    `trace-${Date.now()}`;
+
+  res.status(Number(statusCode)).json({
+    type: errorType,
+    title: errorTitle,
+    status: Number(statusCode),
+    traceId,
+    OriginalErrorType: origType,
+    OriginalDescription: origDesc
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Error simulation API is running on http://localhost:${PORT}`);
 });
