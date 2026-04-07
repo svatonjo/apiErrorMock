@@ -23,7 +23,7 @@ Some more info:
 
 EPs:
 /errors/:statusCode
-/PD/applications/:statusCode
+/errors/template/:templateName/:statusCode
 
 Simulate 404 (any method):
 - URL: http://localhost:4000/errors/404
@@ -35,5 +35,33 @@ Simulate 500 with custom message via body (e.g. POST):
 Simulate 403 with custom message via query param (GET):
 - URL: http://localhost:4000/errors/403?message=Access+denied+for+testing
 
-Added extra PD EP
-Usage Example: Redirect to: http://localhost:4000/PD/applications/404?errorType=Osoba nebyla dohledána&errorTitle=TEST_Osoba_nenalezena&origType=OSOBA_NENALEZENA&origDesc=TEST_Osoba nenalezena 
+Simulate error body from JSON template:
+- Template folder: /templates
+- Example template file: /templates/validation-error.json
+- URL: http://localhost:4000/errors/template/validation-error/400
+
+Simulate template with a different HTTP status via query param:
+- URL: http://localhost:4000/errors/template/validation-error?statusCode=422
+
+Simulate template and override selected values via POST body:
+- URL: http://localhost:4000/errors/template/validation-error/422
+- Body JSON:
+```json
+{
+  "templateOverrides": {
+    "title": "Došlo k jedné nebo více chybám ověření formularu.",
+    "errors": {
+      "mEJCode[0]": [
+        "Toto pole je povinné"
+      ],
+      "checkPlaceCode[0]": [
+        "Toto pole je povinné"
+      ],
+      "birthNumber[0]": [
+        "Neplatny format"
+      ]
+    }
+  }
+}
+```
+

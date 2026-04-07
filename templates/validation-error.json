@@ -1,0 +1,14 @@
+{
+  "title": "Došlo k vlastním chybám ověření.",
+  "errors": {
+    "mEJCode[0]": [
+      "Toto pole (SOD) je špatně zformátované"
+    ],
+    "checkPlaceCode[0]": [
+      "Toto pole (SOD) je špatně zformátované"
+    ],
+    "checkPlaceCode[1]": [
+      "Toto pole (Akce) je špatně zformátované"
+    ]
+  }
+}
